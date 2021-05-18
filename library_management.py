@@ -6,11 +6,11 @@ import sqlite3
 
 # #Create the database or connect to one
 # main_database = sqlite3.connect("library_management_system.db")
-#
+
 # #Creating cursor
 # m = main_database.cursor()
 #
-# #createing table for login and signup
+# # #createing table for login and signup
 # m.execute("""CREATE TABLE login_and_signup(
 #     first_name text,
 #     last_name text,
@@ -23,6 +23,24 @@ import sqlite3
 # main_database.close()
 
 
+#
+# #Create the database or connect to one
+# main_database = sqlite3.connect("library_management_system.db")
+#
+# #Creating cursor
+# m = main_database.cursor()
+#
+# #createing table for details of the book
+# m.execute("""CREATE TABLE book_detail(
+#     book_name text,
+#     book_id integer,
+#     author text,
+#     status text
+#     )""")
+#
+#
+# main_database.commit()
+# main_database.close()
 
 # #Create the database or connect to one
 # main_database = sqlite3.connect("library_management_system.db")
@@ -30,20 +48,53 @@ import sqlite3
 # #Creating cursor
 # m = main_database.cursor()
 #
-# #createing table for login and signup
-# m.execute("""CREATE TABLE book_details(
-#     book_name text,
-#     book_id integer,
-#     author text,
-#     status text,
-#     issue_date text,
-#     returned_date text
+# #createing table for issue and return
+# m.execute("""CREATE TABLE book_ir(
+#     issue text,
+#     returned text
 #     )""")
+#
 #
 # main_database.commit()
 # main_database.close()
+#Inserting data into the database
+def add_a_book():
+    main_database = sqlite3.connect('library_management_system.db')
 
-def add():
+    c = main_database.cursor()
+
+    # Adding to database
+    c.execute(
+        "INSERT INTO book_detail VALUES(:book_name, :book_id, :author, :status )",
+        {
+            'book_name':e1.get(),
+            'book_id': e2.get(),
+            'author': e3.get(),
+            'status': clicked.get()
+
+
+        })
+
+
+
+    main_database.commit()
+    main_database.close()
+
+    e1.delete(0, END)
+    e2.delete(0, END)
+    e3.delete(0, END)
+
+
+#
+
+
+
+def add_book():
+    global clicked
+    global e1
+    global e2
+    global e3
+
     from PIL import ImageTk, Image
     add = Toplevel()
 
@@ -112,7 +163,7 @@ def add():
     frame2 = Frame(add, bg="#a7bbc7", borderwidth=5, relief="solid")
     frame2.grid(sticky="s", pady=20)
 
-    submit = Button(frame2, text="Submit", highlightbackground="#bfd8d5", font=("Times New Roman", 30))
+    submit = Button(frame2, text="Submit", highlightbackground="#bfd8d5", font=("Times New Roman", 30),command=add_a_book)
     submit.grid(sticky="s", ipadx=20, ipady=20)
 
     frame3 = Frame(add, bg="#a7bbc7", borderwidth=5, relief="solid")
@@ -389,7 +440,7 @@ def dashboard():
     frame1.grid(row=1,column=0,padx=300,pady=20)
 
     #adding BUttons
-    addbook=Button(frame1,padx=62,pady=20,text="Add a book",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=add)
+    addbook=Button(frame1,padx=62,pady=20,text="Add a book",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=add_book)
     addbook.grid(row=1,column=0,padx=20,pady=20)
 
     updateinfo=Button(frame1,padx=40,pady=20,text="Update Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=update)
