@@ -305,7 +305,7 @@ def updated_data():
               {
                   'bookname': bookname_update.get(),
                   'author': author_update.get(),
-                  'book_id': record_id
+                  'book_id':record_id
 
               }
               )
