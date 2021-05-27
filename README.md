@@ -25,12 +25,27 @@ At first you can register to login. Then login to open the dashboard which shows
 
 <table>
   <tr>
-    <td><img src='image-readme/login.png' alt="LoginPage"  height='350' width='600'> </td>
+    <td><img src='login.png' alt="LoginPage"  height='350' width='600'> </td>
    </tr>
    <tr>
-    <td><img src='image-readme/dashboard.png' alt="Dashboard" height='350' width='600'></td>
+     <td><img src='addbook.png' alt="AddBook" height='350' width='600'> </td>
+  </tr> 
+  <tr>
+    <td><img src='dashboard.png' alt="Dashboard" height='350' width='600'></td>
   </tr>
   <tr>
-  <td><img src='image-readme/view_data.png' alt="View Data" height='350' width='600'></td>
+  <td><img src='viewbooks.png' alt="Viewbook" height='350' width='600'></td>
   </tr>
  </table>
+
+## CREDITS
+
+TKINTER documentation
+
+Stackoverflow
+
+Geek for Geeks
+
+Unsplash 
+
+Colorhunt
