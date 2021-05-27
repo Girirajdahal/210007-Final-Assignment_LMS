@@ -140,6 +140,7 @@ def add_book():
     name.grid(row=1, column=0, pady=10, sticky="nw", padx=1)
 
     e1 = Entry(frame1, width=50, font=("Times New Roman", 15))
+    e1.focus()
     e1.grid(row=1, column=1, padx=20, pady=10, ipady=5)
 
     id = Label(frame1, text="Book Id :", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
@@ -235,6 +236,7 @@ def update_records():
     name.grid(row=1, column=0, pady=10, sticky="nw", padx=1)
 
     bookname_update = Entry(frame1, width=50, font=("Times New Roman", 15))
+    bookname_update.focus()
     bookname_update.grid(row=1, column=1, padx=20, pady=10, ipady=5)
 
     author = Label(frame1, text="Author :", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
@@ -344,6 +346,7 @@ def update():
     bookid.grid(row=2, column=0, sticky="nw", padx=1)
 
     bookid_entry = Entry(frame1, width=50, font=("Times New Roman", 15))
+    bookid_entry.focus()
     bookid_entry.grid(row=2, column=1, padx=20, pady=10, ipady=5)
 
     frame2 = Frame(update_book, bg="#a7bbc7", borderwidth=5, relief="solid")
@@ -409,7 +412,8 @@ def issue():
     bookname = Label(frame1, text="Book Name :", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
     bookname.grid(row=1, column=0, pady=10, sticky="nw", padx=1)
 
-    bookname_issued = Entry(frame1, width=50, font=("Times New Roman", 15))
+    bookname_issued= Entry(frame1, width=50, font=("Times New Roman", 15))
+    bookname_issued.focus()
     bookname_issued.grid(row=1, column=1, padx=20, pady=10, ipady=5)
 
     bookid = Label(frame1, text="Book ID :", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
@@ -501,6 +505,7 @@ def returned():
     bookname.grid(row=1, column=0, pady=10, sticky="nw", padx=1)
 
     bookname_returned = Entry(frame1, width=50, font=("Times New Roman", 15))
+    bookname_returned.focus()
     bookname_returned.grid(row=1, column=1, padx=20, pady=10, ipady=5)
 
     bookid = Label(frame1, text="Book ID :", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
@@ -576,6 +581,7 @@ def delete():
     bookid.grid(row=2, column=0, sticky="nw", padx=1)
 
     bookid_entry = Entry(frame1, width=50, font=("Times New Roman", 15))
+    bookid_entry.focus()
     bookid_entry.grid(row=2, column=1, padx=20, pady=10, ipady=5)
 
     frame2 = Frame(deletebook, bg="#a7bbc7", borderwidth=5, relief="solid")
@@ -714,6 +720,9 @@ def login():
     username.grid(row=1, column=0, pady=10)
 
     e1 = Entry(frame, width=30)
+
+    e1.focus()
+
     e1.grid(row=1, column=1, padx=20, pady=10, ipady=5)
 
     password = Label(frame, text="Password", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
@@ -804,6 +813,7 @@ def signup():
     firstname.grid(row=2, column=0, sticky="nw", padx=1)
 
     e1 = Entry(frame1, width=56, font=("Times New Roman", 15))
+    e1.focus()
     e1.grid(row=2, column=1, padx=20, pady=10, ipady=5)
 
     lastname = Label(frame1, text="Last Name :", bg="#a7bbc7", fg="black", font=("Times New Roman", 30))
