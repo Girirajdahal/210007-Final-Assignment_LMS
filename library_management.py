@@ -5,6 +5,8 @@ from tkinter import ttk
 import tkinter as tk
 import sqlite3
 
+#========================================== CREATING TABLE FOR DATABASE ================================================
+
 # #Create the database or connect to one
 # main_database = sqlite3.connect("library_management_system.db")
 
@@ -45,27 +47,11 @@ import sqlite3
 
 # #Create the database or connect to one
 # main_database = sqlite3.connect("library_management_system.db")
-#
-# #Creating cursor
-# m = main_database.cursor()
-#
-# #createing table for issue and return
-# m.execute("""CREATE TABLE book_ir(
-#     issue text,
-#     returned text
-#     )""")
-#
-#
-# main_database.commit()
-# main_database.close()
-
-# #Create the database or connect to one
-# main_database = sqlite3.connect("library_management_system.db")
 
 # #Creating cursor
 # m = main_database.cursor()
 
-# #createing table for details of the book
+# #createing table for RETURNED book
 # m.execute("""CREATE TABLE returnbook(
 #     book_name text,
 #     book_id integer,
@@ -76,7 +62,27 @@ import sqlite3
 #
 # main_database.commit()
 # main_database.close()
+#
 
+#Create the database or connect to one
+# main_database = sqlite3.connect("library_management_system.db")
+
+# #Creating cursor
+# m = main_database.cursor()
+
+# # #createing table for ISSUE BOOKS
+# m.execute("""CREATE TABLE issue(
+#      book_name text,
+#      book_id integer,
+#      author text,
+#      issued_date text
+#     )""")
+#
+# print("table created successfully")
+# main_database.commit()
+# main_database.close()
+
+#=============================================ADD A BOOK DATABASE=======================================================
 
 #Inserting data into the database
 def add_a_book():
@@ -96,6 +102,7 @@ def add_a_book():
 
         })
 
+    messagebox.showinfo("a", "Data added successfully")
 
 
     main_database.commit()
@@ -106,7 +113,7 @@ def add_a_book():
     e3.delete(0, END)
 
 
-
+#====================================DESIGN OF ADD A BOOK PAGE==========================================================
 
 def add_book():
     global clicked
@@ -193,13 +200,13 @@ def add_book():
     back.grid()
 
 
-
+#=====================================DESIGN PAGE FOR UPDATE PAGE========================================================
 def update_records():
 
     global bookname_update
     global author_update
     global updatebook
-
+    global clicked
 
     updatebook = Toplevel()
 
@@ -273,6 +280,8 @@ def update_records():
     for data in datas:
         bookname_update.insert(0, data[0])
         author_update.insert(0, data[2])
+        clicked.set(data[3])
+
 
 
 
@@ -289,6 +298,8 @@ def update_records():
                   command=lambda: updatebook.destroy())
     back.grid()
 
+#=====================================DATABASE FOR UPDATE PAGE==========================================================
+
 def updated_data():
 
 
@@ -301,22 +312,28 @@ def updated_data():
     # Must be same name as in database
     c.execute("""UPDATE book_detail SET        
                     book_name = :bookname,
-                    author = :author
+                    author = :author,
+                    status = :status
                     WHERE book_id = :book_id""",
 
               {
                   'bookname': bookname_update.get(),
                   'author': author_update.get(),
+                  'status': clicked.get(),
                   'book_id':record_id
 
               }
               )
-    print("updated successfully")
+
+    messagebox.showinfo("a", "Data updated successfully")
+
 
     main_database.commit()
     main_database.close()
 
     updatebook.destroy()
+
+#================================PAGE FOR UPDATE WHICH HELPS IN OPENING RECORDS ACCORDING TO BOOK ID===================
 
 def update():
 
@@ -364,23 +381,37 @@ def update():
     back.grid()
 
 
+#=============================================DATABASE FOR THE ISSUE BOOKS===================================================================
+
+
 
 def issue_books():
     main_database = sqlite3.connect('library_management_system.db')
 
     c = main_database.cursor()
 
-    c.execute("DELETE from book_detail WHERE book_id = " + bookid_issued.get())
+    c.execute("INSERT INTO issue  VALUES(:book_name, :book_id, :author, :issued_date)",
+              {"book_name": bookname_issued.get(),
+               "book_id": bookid_issued.get(),
+               "author": author_issued.get(),
+               # "status": clicked.get(),
+               "issued_date": issuedate1.get(),
+               # "returned_date":returneddate1.get()
+               })
 
-    bookid_issued.delete(0, END)
-    bookname_issued.delete(0,END)
-    author_issued.delete(0,END)
-    issuedate1.delete(0,END)
 
+    messagebox.showinfo("a", "Book issued")
 
     main_database.commit()
     main_database.close()
 
+    bookname_issued.delete(0, END)
+    bookid_issued.delete(0, END)
+    author_issued.delete(0, END)
+    issuedate1.delete(0, END)
+    # returneddate1.delete(0,END)
+
+#===========================================DESIGN PAGE FOR ISSUE BOOKS================================================
 
 def issue():
     global bookid_issued
@@ -448,14 +479,15 @@ def issue():
     back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),command =lambda:issuebook.destroy())
     back.grid()
 
+#==================================DATABASE FOR RETURNED BOOKS===========================================================
+
 def returned_books():
     main_database = sqlite3.connect('library_management_system.db')
 
     c = main_database.cursor()
 
     # Adding to database
-    c.execute(
-        "INSERT INTO returnbook VALUES(:book_name, :book_id, :author, :returned_date )",
+    c.execute("INSERT INTO returnbook VALUES(:book_name, :book_id, :author, :returned_date )",
         {
             'book_name': bookname_returned.get(),
             'book_id': bookid_returned.get(),
@@ -464,6 +496,9 @@ def returned_books():
 
         })
 
+    #Popup message for the page return book
+    messagebox.showinfo("a", "Book returned")
+
     main_database.commit()
     main_database.close()
 
@@ -471,6 +506,8 @@ def returned_books():
     bookid_returned.delete(0, END)
     author_returned.delete(0, END)
     returneddate1.delete(0,END)
+
+#================================================DESIGN PAGE FOR RETURNED BOOKS=========================================================
 
 def returned():
     global bookname_returned
@@ -540,6 +577,8 @@ def returned():
                   font=("Times New Roman", 30),command = lambda: returnedbook.destroy())
     back.grid()
 
+#=======================================FUNCTION TO DELETE RECORDS===============================================================
+
 def delete_the_records():
     main_database = sqlite3.connect('library_management_system.db')
 
@@ -549,8 +588,13 @@ def delete_the_records():
 
     bookid_entry.delete(0, END)
 
+    #popup message when we click on delete.
+    messagebox.showinfo("a", "Data deleted successfully")
+
     main_database.commit()
     main_database.close()
+
+#===========================================DESIGN PAGE FOR DELETE RECORDS======================================================
 
 def delete():
     global bookid_entry
@@ -598,7 +642,7 @@ def delete():
                   font=("Times New Roman", 30),command = lambda: deletebook.destroy())
     back.grid()
 
-
+#============================================DESIGN PAGE FOR DASHBOARD================================================================
 
 def dashboard():
 
@@ -635,7 +679,7 @@ def dashboard():
     delete1=Button(frame1,padx=50,pady=20,text="Delete Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=delete)
     delete1.grid(row=2,column=0,padx=20,pady=20)
 
-    view=Button(frame1,padx=50,pady=20,text="View Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=lambda:[view_issue(),view_records()])
+    view=Button(frame1,padx=50,pady=20,text="View Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=show_all)
     view.grid(row=2,column=1,padx=20,pady=20)
 
     issuebook=Button(frame1,padx=68,pady=20,text="Issue Book",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=issue)
@@ -652,6 +696,7 @@ def dashboard():
     logout=Button(frame4,text="LOG-OUT",highlightbackground="#bfd8d5",font=("Times New Roman",30),padx=20,pady=20,command=logout_fun)
     logout.grid()
 
+#=======================================FUNCTION TO LOGOUT THE FUNCTION WITH MESSAGEBOX==================================================
 
 def logout_fun():
 
@@ -660,6 +705,9 @@ def logout_fun():
         dashboard_page.destroy()
     else:
         dashboard_page.mainloop()
+
+#===========================DATABASE INCLUDING POPUP FOR LOGIN===========================================================
+
 def login_fun():
 
     #Create the database or connect to one
@@ -696,6 +744,8 @@ def login_fun():
 
     main_database.commit()
     main_database.close()
+
+#==========================================DESIGN PAGE FOR THE LOGIN PAGE================================================
 
 def login():
     global e1
@@ -741,6 +791,8 @@ def login():
     back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),command = lambda:signin.destroy())
     back.grid()
 
+#===========================================DATABASE AND POPUP FOR THE SIGNUP PAGE=========================================================================
+
 def signup_data():
 
 
@@ -776,6 +828,7 @@ def signup_data():
     e4.delete(0, END)
     e5.delete(0, END)
 
+#=============================================DESIGN PAGE FOR THE SIGNUP PAGE=========================================================================
 
 def signup():
     #assigning it as a global variable so that it can be functioned out of the loop too
@@ -853,9 +906,21 @@ def signup():
     back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),command = lambda:signup.destroy())
     back.grid(row=0,column=0)
 
-def view_records():
+#=====================================FUNCTION TO VIEW THE RECORDS IN TREE VIEW======================================================================
 
-    def connect():
+def show_all():
+    all = Toplevel()
+    all.title("Library Management System - Show All Datas")
+    all["background"] = "#e1e5ea"
+    all.geometry("1920x1080")
+
+    style = ttk.Style()
+
+    style.configure("Treeview",
+                    foreground='black',
+                    rowheight=30)
+
+    def connect_all():
         con1 = sqlite3.connect("library_management_system.db")
 
         cur1 = con1.cursor()
@@ -866,7 +931,7 @@ def view_records():
 
         con1.close()
 
-    def View():
+    def View1():
         con1 = sqlite3.connect("library_management_system.db")
 
         cur1 = con1.cursor()
@@ -875,95 +940,80 @@ def view_records():
 
         rows = cur1.fetchall()
 
-        for row in rows:
-            print(row)
+        for row1 in rows:
+            print(row1)
 
-            tree.insert("", END, values=row)
+            tree_head.insert("", END, values=row1)
 
         con1.close()
 
     # connect to the database
 
-    connect()
+    connect_all()
 
-    view_data = Toplevel()
-    view_data.title('Library Management System - View  All Books')
-    view_data['background']= '#e1e5ea'
+#====================================DATA DISPLAYED IN THE DATABASE IN TREE VIEW========================================
 
+    tree_head = ttk.Treeview(all, column=("c1", "c2", "c3","c4"), show='headings')
 
-    # view_data.configure(background="#091b33")
+    tree_head.column("#1",anchor=tk.W,width=190, )
 
-    tree = ttk.Treeview(view_data, column=("c1", "c2", "c3","c4"), show='headings')
+    tree_head.heading("#1", text="BOOK NAME")
 
-    tree.column("#1",anchor=tk.W,width=190, )
+    tree_head.column("#2",anchor=tk.CENTER ,width=75,)
 
-    tree.heading("#1", text="BOOK NAME")
+    tree_head.heading("#2", text="BOOK ID")
 
-    tree.column("#2",anchor=tk.CENTER ,width=75,)
+    tree_head.column("#3",anchor=tk.CENTER,width=190, )
 
-    tree.heading("#2", text="BOOK ID")
+    tree_head.heading("#3", text="AUTHOR")
 
-    tree.column("#3",anchor=tk.CENTER,width=190, )
+    tree_head.column("#4",anchor=tk.CENTER ,width=100,)
 
-    tree.heading("#3", text="AUTHOR")
-
-    tree.column("#4",anchor=tk.CENTER ,width=100,)
-
-    tree.heading("#4", text="STATUS")
+    tree_head.heading("#4", text="STATUS")
 
 
-    tree.grid(row=0,column=0)
+    tree_head.grid(row=0,column=0,padx=30,pady=20)
 
-    button1 = Button(view_data,text="View data", highlightbackground="#bfd8d5", fg="#091b33", padx=20, pady=20, font=("Times New Roman", 30),command=View)
-
-    button1.grid(row=1,column=0)
-
-
-def view_issue():
+#CONNECTING TO THE DATABASE
 
     def connect():
-        con1 = sqlite3.connect("library_management_system.db")
+        con2 = sqlite3.connect("library_management_system.db")
 
-        cur1 = con1.cursor()
+        cur2 = con2.cursor()
 
-        cur1.execute("CREATE TABLE IF NOT EXISTS viewissue ( book_name TEXT, book_id INTEGER PRIMARY KEY, author TEXT, issue TEXT)")
+        cur2.execute("CREATE TABLE IF NOT EXISTS viewissue ( book_name TEXT, book_id INTEGER PRIMARY KEY, author TEXT, issue TEXT)")
 
-        con1.commit()
+        con2.commit()
 
-        con1.close()
+        con2.close()
 
-    def View():
-        con1 = sqlite3.connect("library_management_system.db")
+    def issue_():
+        con2 = sqlite3.connect("library_management_system.db")
 
-        cur1 = con1.cursor()
+        cur2 = con2.cursor()
 
-        # # cur1.execute("SELECT book_name,book_id,author FROM book_detail JOIN book_ir USING (issue) ")
-        # cur1.execute("SELECT book_detail.book_name, book_detail.book_id, book_detail.author, book_ir.issue from book_detail, book_ir")
-        cur1.execute("SELECT * FROM book_ir")
+        cur2.execute("SELECT * FROM issue")
 
-        rows = cur1.fetchall()
+        rows = cur2.fetchall()
 
-        print(rows)
+        for data in rows:
+            print(data)
 
-        for row in rows:
-            print(row)
+            tree.insert("", END, values=data)
 
-            tree.insert("", END, values=row)
-
-        con1.close()
+        con2.close()
 
     # connect to the database
 
+
     connect()
 
-    view_issue = Toplevel()
-    view_issue.title('Library Management System - Issued Books')
-    view_issue['background']= '#e1e5ea'
-
-
-    # view_issue.configure(background="#091b33")
-
-    tree = ttk.Treeview(view_issue, column=("c1", "c2", "c3","c4"), show='headings')
+    # issue1 = Toplevel()
+    # issue1.title("Library Management System - issue")
+    # issue1["background"] = "#e1e5ea"
+    # issue1.geometry("500x500")
+#====================================DATA DISPLAYED IN THE DATABASE IN TREE VIEW========================================
+    tree = ttk.Treeview(all, column=("c_1", "c_2", "c_3","c_4"), show='headings')
 
     tree.column("#1",anchor=tk.W,width=190, )
 
@@ -982,13 +1032,73 @@ def view_issue():
     tree.heading("#4", text="ISSUE DATE")
 
 
-    tree.grid(row=0,column=1)
+    tree.grid(row=0,column=1,padx=30,pady=20)
 
-    button1 = Button(view_issue,text="View data", highlightbackground="#bfd8d5", fg="#091b33", padx=20, pady=20, font=("Times New Roman", 30),command=View)
+#CONNECTING TO A DATABASE
 
-    button1.grid(row=1,column=1)
+    def connect():
 
 
+        con3 = sqlite3.connect("library_management_system.db")
+
+        cur3 = con3.cursor()
+
+        cur3.execute("CREATE TABLE IF NOT EXISTS viewreturned ( book_name TEXT, book_id INTEGER PRIMARY KEY, author TEXT, issue TEXT)")
+
+        con3.commit()
+
+        con3.close()
+
+    def View3():
+        con3 = sqlite3.connect("library_management_system.db")
+
+        cur3 = con3.cursor()
+        cur3.execute("SELECT * FROM returnbook")
+
+        rows = cur3.fetchall()
+
+        print(rows)
+
+        for row3 in rows:
+            print(row3)
+
+            tree_return.insert("", END, values=row3)
+
+        con3.close()
+
+    # connect to the database
+
+    connect()
+
+#======================================Data displayed in database on tree view==========================================
+
+    tree_return = ttk.Treeview(all, column=("c1_", "c2_", "c3_","c4_"), show='headings')
+
+    tree_return.column("#1",anchor=tk.W,width=190, )
+
+    tree_return.heading("#1", text="BOOK NAME")
+
+    tree_return.column("#2",anchor=tk.CENTER ,width=75,)
+
+    tree_return.heading("#2", text="BOOK ID")
+
+    tree_return.column("#3",anchor=tk.CENTER,width=190, )
+
+    tree_return.heading("#3", text="AUTHOR")
+
+    tree_return.column("#4",anchor=tk.CENTER ,width=100,)
+
+    tree_return.heading("#4", text="RETURNED DATE")
+
+
+    tree_return.grid(row=2,column=0,padx=30,pady=20)
+
+    master = Button(all, text="ShowAll", highlightbackground="#bfd8d5", fg="#091b33", padx=20, pady=20,
+                     font=("Times New Roman", 30), command=lambda :[View3(),View1(),issue_()])
+
+    master.grid(row=2, column=1)
+
+#============================================ROOT PAGE==========================================================================
 root=Tk()
 
 #size of screen
