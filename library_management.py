@@ -190,13 +190,15 @@ def add_book():
     frame2 = Frame(add, bg="#a7bbc7", borderwidth=5, relief="solid")
     frame2.grid(sticky="s", pady=20)
 
-    submit = Button(frame2, text="Submit", highlightbackground="#bfd8d5", font=("Times New Roman", 30),command=add_a_book)
+    submit = Button(frame2, text="Submit", highlightbackground="#bfd8d5", font=("Times New Roman", 30),
+                    command=add_a_book)
     submit.grid(sticky="s", ipadx=20, ipady=20)
 
     frame3 = Frame(add, bg="#a7bbc7", borderwidth=5, relief="solid")
     frame3.grid(row=0, column=0, sticky="nw", pady=20, padx=20)
 
-    back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),command = lambda:add.destroy())
+    back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),
+                  command = lambda:add.destroy())
     back.grid()
 
 
@@ -282,13 +284,11 @@ def update_records():
         author_update.insert(0, data[2])
         clicked.set(data[3])
 
-
-
-
     frame2 = Frame(updatebook, bg="#a7bbc7", borderwidth=5, relief="solid")
     frame2.grid(sticky="s", pady=20)
 
-    submit = Button(frame2, text="Save", highlightbackground="#bfd8d5", font=("Times New Roman", 30),command=updated_data)
+    submit = Button(frame2, text="Save", highlightbackground="#bfd8d5", font=("Times New Roman", 30),
+                    command=updated_data)
     submit.grid(sticky="s", ipadx=20, ipady=20)
 
     frame3 = Frame(updatebook, bg="#a7bbc7", borderwidth=5, relief="solid")
@@ -670,22 +670,28 @@ def dashboard():
     frame1.grid(row=1,column=0,padx=300,pady=20)
 
     #adding BUttons
-    addbook=Button(frame1,padx=62,pady=20,text="Add a book",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=add_book)
+    addbook=Button(frame1,padx=62,pady=20,text="Add a book",highlightbackground="#bfd8d5",font=("Times New Roman",30),
+                   command=add_book)
     addbook.grid(row=1,column=0,padx=20,pady=20)
 
-    updateinfo=Button(frame1,padx=40,pady=20,text="Update Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=update)
+    updateinfo=Button(frame1,padx=40,pady=20,text="Update Books",highlightbackground="#bfd8d5",
+                      font=("Times New Roman",30),command=update)
     updateinfo.grid(row=1,column=1,padx=20,pady=20)
 
-    delete1=Button(frame1,padx=50,pady=20,text="Delete Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=delete)
+    delete1=Button(frame1,padx=50,pady=20,text="Delete Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),
+                   command=delete)
     delete1.grid(row=2,column=0,padx=20,pady=20)
 
-    view=Button(frame1,padx=50,pady=20,text="View Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=show_all)
+    view=Button(frame1,padx=50,pady=20,text="View Books",highlightbackground="#bfd8d5",font=("Times New Roman",30),
+                command=show_all)
     view.grid(row=2,column=1,padx=20,pady=20)
 
-    issuebook=Button(frame1,padx=68,pady=20,text="Issue Book",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=issue)
+    issuebook=Button(frame1,padx=68,pady=20,text="Issue Book",highlightbackground="#bfd8d5",font=("Times New Roman",30),
+                     command=issue)
     issuebook.grid(row=3,column=0,padx=20,pady=20)
 
-    returnbook=Button(frame1,padx=38,pady=20,text="Returned Book",highlightbackground="#bfd8d5",font=("Times New Roman",30),command=returned)
+    returnbook=Button(frame1,padx=38,pady=20,text="Returned Book",highlightbackground="#bfd8d5",
+                      font=("Times New Roman",30),command=returned)
     returnbook.grid(row=3,column=1,padx=20,pady=20)
 
     #Creating another frame for button
@@ -693,7 +699,8 @@ def dashboard():
     frame4.grid(row=0,column=0,sticky="nw",padx=20,pady=20)
 
     #Inserting button inside the frame
-    logout=Button(frame4,text="LOG-OUT",highlightbackground="#bfd8d5",font=("Times New Roman",30),padx=20,pady=20,command=logout_fun)
+    logout=Button(frame4,text="LOG-OUT",highlightbackground="#bfd8d5",font=("Times New Roman",30),padx=20,pady=20,
+                  command=logout_fun)
     logout.grid()
 
 #=======================================FUNCTION TO LOGOUT THE FUNCTION WITH MESSAGEBOX==================================================
@@ -782,13 +789,15 @@ def login():
     e2.grid(row=2, column=1, padx=20, pady=10, ipady=5)
 
     # Putting button to login
-    login = Button(frame, text="LOGIN", highlightbackground="#bfd8d5", font=("Times New Roman", 30), padx=20, pady=20,command=login_fun)
+    login = Button(frame, text="LOGIN", highlightbackground="#bfd8d5", font=("Times New Roman", 30), padx=20,
+                   pady=20,command=login_fun)
     login.grid(row=6, column=0, columnspan=2, pady=30)
 
     frame3 = Frame(signin, bg="#a7bbc7", borderwidth=5, relief="solid")
     frame3.grid(row=0, column=0, sticky="nw", padx=20, pady=20)
 
-    back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),command = lambda:signin.destroy())
+    back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),
+                  command = lambda:signin.destroy())
     back.grid()
 
 #===========================================DATABASE AND POPUP FOR THE SIGNUP PAGE=========================================================================
@@ -903,7 +912,8 @@ def signup():
     frame3 = Frame(signup, bg="#a7bbc7", borderwidth=5, relief="solid")
     frame3.grid(row=0, column=0, sticky="nw", padx=20, pady=20)
 
-    back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),command = lambda:signup.destroy())
+    back = Button(frame3, text="Back", highlightbackground="#bfd8d5", padx=20, pady=20, font=("Times New Roman", 30),
+                  command = lambda:signup.destroy())
     back.grid(row=0,column=0)
 
 #=====================================FUNCTION TO VIEW THE RECORDS IN TREE VIEW======================================================================
